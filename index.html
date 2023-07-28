@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color picker assistant</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="index.js" defer></script>
+</head>
+
+<body>
+    <h1>Color card</h1>
+    <label>Upload image
+        <input type="file" name="imageFile" id="fileInput" onchange="onFileUpload(event)"
+            accept="image/jpeg, image/png, image/jpg">
+    </label>
+    <img id="imagePreview"></img>
+    <!-- <img id="uploadedImage" src="./images/DSC03202_.jpg"/> -->
+    <input type="range" id="range" class="slider" name="range" min="0" max="100" value="0" onclick="pixelateImage()" />
+    <canvas id="pixelatedImageCanvas" width="900" height="600"></canvas>
+    <section class="colors">
+
+    </section>
+</body>
+
+</html>
