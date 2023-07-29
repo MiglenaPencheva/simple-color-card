@@ -1,35 +1,40 @@
-// upload image and show a preview
+let imagePreview = document.getElementById('imagePreview');
+const canvas = document.getElementById('pixelatedImageCanvas');
+const context = canvas.getContext('2d');
+
 function onFileUpload(event) {
+    // clear canvas
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    // show uploaded image
     const file = event.target.files[0];
     const src = URL.createObjectURL(file);
-    let imagePreview = document.getElementById('imagePreview');
     imagePreview.src = src;
 };
 
+// resize image
 // calculate canvas dimensions  
 
 
-// get pixelation 
 function pixelateImage() {
-    const canvas = document.getElementById('pixelatedImageCanvas');
-    const image = document.getElementById('imagePreview');
-
-    const blockSize = Number(document.getElementById('range').value);
-
     // draw image in canvas and get image data
-    const context = canvas.getContext('2d');
-    context.drawImage(image, 0, 0);
+    context.drawImage(imagePreview, 0, 0);
     const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
     const { data } = imageData;
+    
+    const blockSize = Number(document.getElementById('range').value);
 
     // calculate average color for every square
-    for (let y = 0; y < canvas.height; y += blockSize) {
-        for (let x = 0; x < canvas.width; x += blockSize) {
-            const baseIndex = (y * canvas.width + x) * 4;
-            const pixel = getAverageColor(data, baseIndex, canvas.width, blockSize);
-            fillBlock(data, pixel, baseIndex, canvas.width, blockSize);
+    if (blockSize > 0) {
+        for (let y = 0; y < canvas.height; y += blockSize) {
+            for (let x = 0; x < canvas.width; x += blockSize) {
+                const baseIndex = (y * canvas.width + x) * 4;
+                const pixel = getAverageColor(data, baseIndex, canvas.width, blockSize);
+                fillBlock(data, pixel, baseIndex, canvas.width, blockSize);
+            }
         }
     }
+    
     function getAverageColor(data, baseIndex, width, blockSize) {
         let totalR = 0;
         let totalG = 0;
@@ -61,9 +66,11 @@ function pixelateImage() {
             }
         }
     }
+    
     // draw pixelated image in canvas
     context.putImageData(imageData, 0, 0);
 }
+    
     // show color info from pixels
     // pick color from squares
     // show picked colors in colors section
