@@ -16,15 +16,25 @@ function onFileUpload(event) {
     rangeSection.style.display = 'flex';
 };
 
-// resize image
-// calculate canvas dimensions  
+function onImageLoad() {
+    const ratio = imagePreview.naturalWidth / imagePreview.naturalHeight;
+
+    // calculate dimensions of the canvas
+    if (ratio > 1) {
+        canvas.width = 600;
+        canvas.height = canvas.width / ratio;
+    } else {
+        canvas.height = 400;
+        canvas.width = canvas.height * ratio;
+    }
+}
 
 function pixelateImage() {
     // draw image in canvas and get image data
-    context.drawImage(imagePreview, 0, 0);
+    context.drawImage(imagePreview, 0, 0, canvas.width, canvas.height);
     const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
     const { data } = imageData;
-    
+
     const blockSize = Number(range.value);
 
     // calculate average color for every square
@@ -37,7 +47,7 @@ function pixelateImage() {
             }
         }
     }
-    
+
     function getAverageColor(data, baseIndex, width, blockSize) {
         let totalR = 0;
         let totalG = 0;
@@ -69,11 +79,12 @@ function pixelateImage() {
             }
         }
     }
-    
+
     // draw pixelated image in canvas
     context.putImageData(imageData, 0, 0);
 }
-    
+
+
     // show color info from pixels
     // pick color from squares
     // show picked colors in colors section
