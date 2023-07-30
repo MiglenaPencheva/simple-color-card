@@ -11,15 +11,29 @@
 </head>
 
 <body>
-    <h1>Color card</h1>
-    <label>Upload image
-        <input type="file" name="imageFile" id="fileInput" onchange="onFileUpload(event)"
-            accept="image/jpeg, image/png, image/jpg">
-    </label>
-    <img id="imagePreview"></img>
-    <!-- <img id="uploadedImage" src="./images/DSC03202_.jpg"/> -->
-    <input type="range" id="range" class="slider" name="range" min="0" max="100" value="0" onclick="pixelateImage()" />
-    <canvas id="pixelatedImageCanvas" width="900" height="600"></canvas>
+    <header>
+        <h1>Color card</h1>
+        <h3>Color extraction assistant. Tool for pixelation.</h3>
+        <h6>Choose the perfect colors.</h6>
+    </header>
+
+    <section id="uploadSection">
+        <label class="fileInputLabel">
+            <input type="file" name="imageFile" id="fileInput" onchange="onFileUpload(event)"
+                accept="image/jpeg, image/png, image/jpg">
+            Upload image
+        </label>
+        <img id="imagePreview"></img>
+
+        <section id="pixelRangeSection">
+            <span>set pixelation</span>
+            <input type="range" id="pixelRangeSlider" name="pixelRange" min="0" max="100" defaultValue="24"
+                onmousemove="pixelateImage()" />
+        </section>
+    </section>
+
+    <canvas id="pixelatedImageCanvas" width="600" height="400"></canvas>
+
     <section class="colors">
 
     </section>

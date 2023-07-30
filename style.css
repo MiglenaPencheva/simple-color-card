@@ -1,0 +1,149 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;1,100;1,200;1,300;1,400;1,500&display=swap');
+
+* {
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+:root {
+    --teal-grey: #608d9e;
+    --teal-light-grey: #b8c3c7;
+    --vermilion: #fd8645;
+    --vermilion-white: #ffefe6;
+}
+
+html {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--teal-grey);
+}
+
+body {
+    margin: 0 auto;
+    padding: 0;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header {
+    width: 100%;
+}
+
+#uploadSection {
+    width: 100%;
+}
+
+h1 {
+    margin: 0;
+    padding: 0.5rem 0;
+    text-align: center;
+    font-weight: 500;
+    font-size: 3rem;
+    letter-spacing: 0.3rem;
+    text-shadow: 4px 4px 4px var(--teal-light-grey);
+}
+
+h3 {
+    margin: 0;
+    padding: 0 0 0.2rem 0;
+    text-align: center;
+    font-weight: 500;
+    /* font-size: 1.5rem; */
+    background-color: var(--vermilion-white);
+}
+
+h6 {
+    margin: 0;
+    text-align: center;
+    padding: 0.5rem 0 0.8rem 0;
+    font-weight: 100;
+    font-style: italic;
+    font-size: 2rem;
+    letter-spacing: 0.2rem;
+    text-shadow: 2px 2px 2px var(--vermilion);
+    border-bottom: 1px solid var(--teal-grey);
+}
+
+/*********** Upload section *******************************************/
+
+#uploadSection {
+    margin: 1rem 0;
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.fileInputLabel {
+    margin: 1rem;
+    padding: 0.6rem 1rem;
+    border-radius: 0.4rem;
+    text-decoration: none;
+    color: var(--vermilion-white);
+    background: var(--teal-grey);
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    transition-duration: 0.5s;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.fileInputLabel:hover {
+    background: var(--vermilion-white);
+    color: var(--teal-grey);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+#fileInput {
+    display: none;
+}
+
+#imagePreview {
+    display: none;
+    max-width: 150px;
+    max-height: 100px;
+}
+
+/********* range *********************************************/
+
+#pixelRangeSection {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+#pixelRangeSlider {
+    margin: 0 1rem;
+    height: 10px;
+    border-radius: 5px;
+    background: var(--vermilion-white);
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+#pixelRangeSlider:hover {
+    opacity: 0.7;
+}
+
+#pixelRangeSlider::-webkit-slider-thumb {
+    width: 20px;
+    height: 20px;
+    background: var(--teal-grey);
+    cursor: pointer;
+}
+
+#pixelRangeSlider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: var(--teal-grey);
+    cursor: pointer;
+}
+
+/******* canvas **********************************************/
+
+#pixelatedImageCanvas {
+    max-width: 90vw;
+    max-height: 90vh;
+ }
+ 

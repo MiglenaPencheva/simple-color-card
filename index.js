@@ -1,6 +1,8 @@
 let imagePreview = document.getElementById('imagePreview');
 const canvas = document.getElementById('pixelatedImageCanvas');
 const context = canvas.getContext('2d');
+const rangeSection = document.getElementById('pixelRangeSection');
+const range = document.getElementById('pixelRangeSlider');
 
 function onFileUpload(event) {
     // clear canvas
@@ -10,11 +12,12 @@ function onFileUpload(event) {
     const file = event.target.files[0];
     const src = URL.createObjectURL(file);
     imagePreview.src = src;
+    imagePreview.style.display = 'block';
+    rangeSection.style.display = 'flex';
 };
 
 // resize image
 // calculate canvas dimensions  
-
 
 function pixelateImage() {
     // draw image in canvas and get image data
@@ -22,7 +25,7 @@ function pixelateImage() {
     const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
     const { data } = imageData;
     
-    const blockSize = Number(document.getElementById('range').value);
+    const blockSize = Number(range.value);
 
     // calculate average color for every square
     if (blockSize > 0) {
