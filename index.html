@@ -27,16 +27,28 @@
 
         <section id="pixelRangeSection">
             <span>set pixelation</span>
-            <input type="range" id="pixelRangeSlider" name="pixelRange" min="0" max="100" defaultValue="24"
+            <input type="range" id="pixelRangeSlider" name="pixelRange" min="0" step="5" max="100" defaultValue="24"
                 onmousemove="pixelateImage()" />
         </section>
     </section>
 
-    <canvas id="pixelatedImageCanvas" width="600" height="400"></canvas>
+    <section id="canvasSection">
+        <canvas id="pixelatedImageCanvas" width="600" height="400" 
+            onmousemove="getPixel(event)" onclick="drawColors()">
+        </canvas>
 
-    <section class="colors">
-
+        <span id="pixelColor"></span>
     </section>
+
+    <!-- <ul class="colors" id="colors" 
+        onDrop={dropHandler} onDragOver={(event)=> event.preventDefault()}>
+    </ul> -->
+
+    <!-- <section className="picker__buttons">
+        <button className="button" onClick={exportPalette}>Export palette</button>
+        <button className="button" onClick={exportScheme}>Export scheme</button>
+    </section> -->
+
 </body>
 
 </html>

@@ -1,8 +1,11 @@
-let imagePreview = document.getElementById('imagePreview');
+const imagePreview = document.getElementById('imagePreview');
+const canvasSection = document.getElementById('canvasSection');
 const canvas = document.getElementById('pixelatedImageCanvas');
 const context = canvas.getContext('2d');
 const rangeSection = document.getElementById('pixelRangeSection');
 const range = document.getElementById('pixelRangeSlider');
+const pixelColorPreview = document.getElementById('pixelColor');
+let pixelRgb = '#ffefe6';
 
 function onFileUpload(event) {
     // clear canvas
@@ -33,7 +36,7 @@ function pixelateImage() {
     // draw image in canvas and get image data
     context.drawImage(imagePreview, 0, 0, canvas.width, canvas.height);
     const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-    const { data } = imageData;
+    const data = imageData.data;
 
     const blockSize = Number(range.value);
 
@@ -46,6 +49,7 @@ function pixelateImage() {
                 fillBlock(data, pixel, baseIndex, canvas.width, blockSize);
             }
         }
+        canvasSection.style.display = 'flex';
     }
 
     function getAverageColor(data, baseIndex, width, blockSize) {
@@ -69,6 +73,7 @@ function pixelateImage() {
             Math.floor(totalB / pixelCount),
         ];
     }
+
     function fillBlock(data, pixel, baseIndex, width, blockSize) {
         for (let y = 0; y < blockSize; y++) {
             for (let x = 0; x < blockSize; x++) {
@@ -84,7 +89,24 @@ function pixelateImage() {
     context.putImageData(imageData, 0, 0);
 }
 
+const getPixel = (event) => {
+    const bounding = canvas.getBoundingClientRect();
+    const x = event.clientX - bounding.left;
+    const y = event.clientY - bounding.top;
+    const pixelData = context.getImageData(x, y, 1, 1).data;
+    const arr = Array.from(pixelData);
+    pixelRgb = `rgb(${arr[0]}, ${arr[1]}, ${arr[2]})`;
 
-    // show color info from pixels
-    // pick color from squares
-    // show picked colors in colors section
+    if (arr[0] === 0 && arr[1] === 0 && arr[2] === 0) {
+        pixelColorPreview.style['background-color'] = '#ffefe6';
+    } else {
+        pixelColorPreview.style['background-color'] = pixelRgb;
+    }
+};
+
+// show picked colors in colors section
+function drawColors() {
+    console.log(pixelRgb);
+}
+
+// show color info from pixels
