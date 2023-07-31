@@ -32,18 +32,17 @@
         </section>
     </section>
 
-    <section id="canvasSection">
+    <section id="resultSection">
         <canvas id="pixelatedImageCanvas" width="600" height="400" 
             onmousemove="getPixel(event)" onclick="drawColors()">
         </canvas>
 
         <span id="pixelColor"></span>
+        
+        <ul id="colors"></ul>
+        <!-- onDrop={dropHandler} onDragOver={(event)=> event.preventDefault()} -->
     </section>
-
-    <!-- <ul class="colors" id="colors" 
-        onDrop={dropHandler} onDragOver={(event)=> event.preventDefault()}>
-    </ul> -->
-
+        
     <!-- <section className="picker__buttons">
         <button className="button" onClick={exportPalette}>Export palette</button>
         <button className="button" onClick={exportScheme}>Export scheme</button>

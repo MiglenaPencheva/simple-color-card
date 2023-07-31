@@ -1,15 +1,17 @@
 const imagePreview = document.getElementById('imagePreview');
-const canvasSection = document.getElementById('canvasSection');
+const resultSection = document.getElementById('resultSection');
 const canvas = document.getElementById('pixelatedImageCanvas');
 const context = canvas.getContext('2d');
 const rangeSection = document.getElementById('pixelRangeSection');
 const range = document.getElementById('pixelRangeSlider');
 const pixelColorPreview = document.getElementById('pixelColor');
+const colors = document.getElementById('colors');
 let pixelRgb = '#ffefe6';
 
 function onFileUpload(event) {
     // clear canvas
-    context.clearRect(0, 0, canvas.width, canvas.height);
+    resultSection.style.display = 'none';
+    while(colors.firstChild) colors.removeChild(colors.firstChild);
 
     // show uploaded image
     const file = event.target.files[0];
@@ -33,6 +35,7 @@ function onImageLoad() {
 }
 
 function pixelateImage() {
+
     // draw image in canvas and get image data
     context.drawImage(imagePreview, 0, 0, canvas.width, canvas.height);
     const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
@@ -49,7 +52,7 @@ function pixelateImage() {
                 fillBlock(data, pixel, baseIndex, canvas.width, blockSize);
             }
         }
-        canvasSection.style.display = 'flex';
+        resultSection.style.display = 'flex';
     }
 
     function getAverageColor(data, baseIndex, width, blockSize) {
@@ -106,7 +109,10 @@ const getPixel = (event) => {
 
 // show picked colors in colors section
 function drawColors() {
-    console.log(pixelRgb);
+    let colorLi = document.createElement('li');
+    colorLi.style['background-color'] = pixelRgb;
+    colorLi.classList.add('colorLi');
+    colors.appendChild(colorLi);
 }
 
 // show color info from pixels
