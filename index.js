@@ -11,7 +11,7 @@ let pixelRgb = '#ffefe6';
 function onFileUpload(event) {
     // clear canvas
     resultSection.style.display = 'none';
-    while(colors.firstChild) colors.removeChild(colors.firstChild);
+    while (colors.firstChild) colors.removeChild(colors.firstChild);
 
     // show uploaded image
     const file = event.target.files[0];
@@ -35,7 +35,6 @@ function onImageLoad() {
 }
 
 function pixelateImage() {
-
     // draw image in canvas and get image data
     context.drawImage(imagePreview, 0, 0, canvas.width, canvas.height);
     const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
@@ -108,11 +107,42 @@ const getPixel = (event) => {
 };
 
 // show picked colors in colors section
-function drawColors() {
+function addColors() {
     let colorLi = document.createElement('li');
     colorLi.style['background-color'] = pixelRgb;
+    colorLi.textContent = pixelRgb;
     colorLi.classList.add('colorLi');
     colors.appendChild(colorLi);
 }
 
-// show color info from pixels
+function exportColorCard() {
+    const cnv = document.createElement('canvas');
+    const exportCtx = cnv.getContext('2d');
+    cnv.width = colors.offsetWidth;
+    cnv.height = colors.offsetHeight;
+
+    const items = colors.getElementsByTagName('li');
+    let y = 0;
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+      const computedStyles = window.getComputedStyle(item);
+
+      const itemWidth = parseFloat(computedStyles.width);
+      const itemHeight = parseFloat(computedStyles.height);
+
+      exportCtx.fillStyle = computedStyles.backgroundColor;
+      exportCtx.fillRect(0, y, itemWidth, itemHeight);
+
+      exportCtx.fillStyle = computedStyles.color;
+      exportCtx.fillText(item.textContent, 300, y + 30); // Adjust the position as needed
+
+      y += itemHeight;
+    }
+
+    const dataURL = cnv.toDataURL('image/png', 1.0);
+    const downloadLink = document.createElement('a');
+    downloadLink.href = dataURL;
+    downloadLink.download = 'card_' + (Math.random() * 9999 | 0);
+    downloadLink.click();
+  }
+

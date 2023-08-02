@@ -34,19 +34,22 @@
 
     <section id="resultSection">
         <canvas id="pixelatedImageCanvas" width="600" height="400" 
-            onmousemove="getPixel(event)" onclick="drawColors()">
+            onmousemove="getPixel(event)" onclick="addColors()">
         </canvas>
 
-        <span id="pixelColor"></span>
+        <div class="asideResult">
+            <span>Move the mouse
+                <br /> over the image.
+            </span>
+            <span id="pixelColor"></span>
+            <span>Click
+                <br />to pick sample.
+            </span>
+            <button id="exportButton" onclick="exportColorCard()">color card export</button>
+        </div>
         
         <ul id="colors"></ul>
-        <!-- onDrop={dropHandler} onDragOver={(event)=> event.preventDefault()} -->
     </section>
-        
-    <!-- <section className="picker__buttons">
-        <button className="button" onClick={exportPalette}>Export palette</button>
-        <button className="button" onClick={exportScheme}>Export scheme</button>
-    </section> -->
 
 </body>
 

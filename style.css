@@ -156,30 +156,69 @@ h6 {
     
  }
 
+.asideResult {
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.asideResult span {
+    font-size: 0.8rem;
+    text-align: center;
+}
+
 #pixelColor {
-    margin: 0.5rem 0 0 0.5rem;
     width: 100px;
     height: 100px;
     background-color: var(--vermilion-white);
     border-radius: 4px;
 }
 
+#exportButton {
+    margin: 0;
+    padding: 0.6rem 0.5rem;
+    width: 100px;
+    border-radius: 0.4rem;
+    text-decoration: none;
+    color: var(--vermilion-white);
+    background: var(--teal-grey);
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: center;
+    transition-duration: 0.5s;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#exportButton:hover {
+    background: var(--vermilion-white);
+    color: var(--teal-grey);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
 #colors {
     margin: 0.5rem;
     padding: 0;
-    width: 450px;
+    width: 400px;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 0.5rem;
 }
 
 .colorLi {
     list-style-type: none;
-    width: 100px;
-    height: 100px;
-    border-radius: 4px;
+    padding: 0.5rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    font-style: italic;
+    border-radius: 8px;
+    text-shadow: 1px 0px 1px var(--vermilion-white);
 }
- 
 
 
 @media (max-width: 600px) {
