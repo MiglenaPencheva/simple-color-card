@@ -109,13 +109,19 @@ const getPixel = (event) => {
 // show picked colors in colors section
 function addColors() {
     let colorLi = document.createElement('li');
+    let textLi = document.createElement('li');
     colorLi.style['background-color'] = pixelRgb;
-    colorLi.textContent = pixelRgb;
+    // colorLi.style.background = `linear-gradient(to right, ${pixelRgb}, white 99%)`;
+    textLi.textContent = pixelRgb + ' #123456' + ' hsl(12, 34, 56)';
     colorLi.classList.add('colorLi');
+    textLi.classList.add('textLi');
     colors.appendChild(colorLi);
+    colors.appendChild(textLi);
 }
 
 function exportColorCard() {
+    if (!colors.firstChild) return;
+    
     const cnv = document.createElement('canvas');
     const exportCtx = cnv.getContext('2d');
     cnv.width = colors.offsetWidth;
@@ -134,7 +140,7 @@ function exportColorCard() {
       exportCtx.fillRect(0, y, itemWidth, itemHeight);
 
       exportCtx.fillStyle = computedStyles.color;
-      exportCtx.fillText(item.textContent, 300, y + 30); // Adjust the position as needed
+      exportCtx.fillText(item.textContent, 10, y + 10); // Adjust the position as needed
 
       y += itemHeight;
     }

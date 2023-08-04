@@ -89,11 +89,13 @@ h6 {
     transition-duration: 0.5s;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+
 .fileInputLabel:hover {
     background: var(--vermilion-white);
     color: var(--teal-grey);
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
+
 #fileInput {
     display: none;
 }
@@ -152,9 +154,7 @@ h6 {
     /* gap: 0.5rem; */
 }
 
-#pixelatedImageCanvas {
-    
- }
+#pixelatedImageCanvas {}
 
 .asideResult {
     padding: 0.5rem;
@@ -203,24 +203,26 @@ h6 {
     margin: 0.5rem;
     padding: 0;
     width: 400px;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* gap: 0.5rem; */
 }
 
 .colorLi {
     list-style-type: none;
-    padding: 0.5rem;
-    height: 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: end;
-    font-style: italic;
-    border-radius: 8px;
-    text-shadow: 1px 0px 1px var(--vermilion-white);
+    height: 44px;
+    border-radius: 8px 8px 0 0;
+    /* text-shadow: 1px 0px 1px var(--teal-grey); */
+}
+
+.textLi {
+    margin-bottom: 0.5rem;
+    list-style-type: none;
+    padding: 0.2rem;
+    border-radius: 0 0 8px 8px;
+    border-bottom: 1px solid var(--teal-grey);
 }
 
 
-@media (max-width: 600px) {
-    
-}
+
+@media (max-width: 600px) {}
