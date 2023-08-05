@@ -33,8 +33,7 @@
     </section>
 
     <section id="resultSection">
-        <canvas id="pixelatedImageCanvas" width="600" height="400" 
-            onmousemove="getPixel(event)" onclick="addColors()">
+        <canvas id="pixelatedImageCanvas" width="600" height="400" onmousemove="getPixel(event)" onclick="addColors()">
         </canvas>
 
         <div class="asideResult">
@@ -47,8 +46,13 @@
             </span>
             <button id="exportButton" onclick="exportColorCard()">Export color card</button>
         </div>
-        
-        <ul id="colors"></ul>
+
+        <section id="cardSection">
+            <h4>COLOR SWATCHES</h4>
+            <h5>Card of color samples with values</h5>
+            <ul id="colors">
+            </ul>
+        </section>
     </section>
 
 </body>

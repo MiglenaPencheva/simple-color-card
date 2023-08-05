@@ -5,6 +5,7 @@ const context = canvas.getContext('2d');
 const rangeSection = document.getElementById('pixelRangeSection');
 const range = document.getElementById('pixelRangeSlider');
 const pixelColorPreview = document.getElementById('pixelColor');
+const cardSection = document.getElementById('cardSection');
 const colors = document.getElementById('colors');
 let pixelRgb = '#ffefe6';
 
@@ -106,43 +107,67 @@ const getPixel = (event) => {
     }
 };
 
-// show picked colors in colors section
 function addColors() {
+    // color
     let colorLi = document.createElement('li');
-    let textLi = document.createElement('li');
     colorLi.style['background-color'] = pixelRgb;
-    // colorLi.style.background = `linear-gradient(to right, ${pixelRgb}, white 99%)`;
-    textLi.textContent = pixelRgb + ' #123456' + ' hsl(12, 34, 56)';
     colorLi.classList.add('colorLi');
+
+    // hover and delete
+    let closeBtn = document.createElement('button');
+    closeBtn.className = 'close-button';
+    closeBtn.textContent = 'x';
+
+    colorLi.addEventListener('mouseover', () => {
+        closeBtn.style.display = 'inline-block';
+    });
+    colorLi.addEventListener('mouseleave', () => {
+        closeBtn.style.display = 'none';
+    });
+    closeBtn.addEventListener('click', (element) => {
+        colors.removeChild(element.target.parentElement.nextSibling);
+        colors.removeChild(element.target.parentElement);
+    });
+
+    // values
+    let textLi = document.createElement('li');
+    textLi.textContent = pixelRgb + ' #123456' + ' hsl(12, 34, 56)' + ' #123456';
     textLi.classList.add('textLi');
+
+    colorLi.appendChild(closeBtn);
     colors.appendChild(colorLi);
     colors.appendChild(textLi);
 }
 
 function exportColorCard() {
     if (!colors.firstChild) return;
-    
+
     const cnv = document.createElement('canvas');
     const exportCtx = cnv.getContext('2d');
-    cnv.width = colors.offsetWidth;
-    cnv.height = colors.offsetHeight;
+    cnv.width = 600;
+    cnv.height = colors.offsetHeight + 20;
+
+    exportCtx.fillStyle = '#608d9e';
+    exportCtx.fillText('COLOR SWATCHES', 0, 10);
+    exportCtx.fillText('Card of color samples with values', 0, 20);
 
     const items = colors.getElementsByTagName('li');
-    let y = 0;
+    let y = 30;
     for (let i = 0; i < items.length; i++) {
-      const item = items[i];
-      const computedStyles = window.getComputedStyle(item);
+        const item = items[i];
+        const computedStyles = window.getComputedStyle(item);
 
-      const itemWidth = parseFloat(computedStyles.width);
-      const itemHeight = parseFloat(computedStyles.height);
+        const itemHeight = parseFloat(computedStyles.height);
 
-      exportCtx.fillStyle = computedStyles.backgroundColor;
-      exportCtx.fillRect(0, y, itemWidth, itemHeight);
+        exportCtx.fillStyle = computedStyles.backgroundColor;
+        exportCtx.fillRect(0, y, cnv.width, itemHeight);
 
-      exportCtx.fillStyle = computedStyles.color;
-      exportCtx.fillText(item.textContent, 10, y + 10); // Adjust the position as needed
+        if (item.textContent !== 'x') {
+            exportCtx.fillStyle = computedStyles.color;
+            exportCtx.fillText(item.textContent, 0, y + 15); // Adjust the position as needed
+        }
 
-      y += itemHeight;
+        y += itemHeight - 5;
     }
 
     const dataURL = cnv.toDataURL('image/png', 1.0);
@@ -150,5 +175,5 @@ function exportColorCard() {
     downloadLink.href = dataURL;
     downloadLink.download = 'card_' + (Math.random() * 9999 | 0);
     downloadLink.click();
-  }
+}
 
