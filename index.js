@@ -132,7 +132,7 @@ function addColors() {
     let hex = rgbToHex(r, g, b);
     let hsl = rgbToHsl(r, g, b).hslString;
     let cmyk = rgbToCmyk(r, g, b).cmykString;
-    textLi.textContent = `${hex} ${pixelRgb} ${hsl} ${cmyk}`;
+    textLi.textContent = `${hex} || ${pixelRgb} || ${hsl} || ${cmyk}`;
     textLi.classList.add('textLi');
 
     colorLi.appendChild(closeBtn);
