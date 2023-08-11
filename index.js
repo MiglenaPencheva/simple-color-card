@@ -8,6 +8,9 @@ const pixelColorPreview = document.getElementById('pixelColor');
 const cardSection = document.getElementById('cardSection');
 const colors = document.getElementById('colors');
 let pixelRgb = '#ffefe6';
+let r = 0;
+let g = 0;
+let b = 0;
 
 function onFileUpload(event) {
     // clear canvas
@@ -97,14 +100,9 @@ const getPixel = (event) => {
     const x = event.clientX - bounding.left;
     const y = event.clientY - bounding.top;
     const pixelData = context.getImageData(x, y, 1, 1).data;
-    const arr = Array.from(pixelData);
-    pixelRgb = `rgb(${arr[0]}, ${arr[1]}, ${arr[2]})`;
-
-    if (arr[0] === 0 && arr[1] === 0 && arr[2] === 0) {
-        pixelColorPreview.style['background-color'] = '#ffefe6';
-    } else {
-        pixelColorPreview.style['background-color'] = pixelRgb;
-    }
+    [r, g, b] = Array.from(pixelData);
+    pixelRgb = `rgb(${r}, ${g}, ${b})`;
+    pixelColorPreview.style['background-color'] = pixelRgb;
 };
 
 function addColors() {
@@ -131,12 +129,100 @@ function addColors() {
 
     // values
     let textLi = document.createElement('li');
-    textLi.textContent = pixelRgb + ' #123456' + ' hsl(12, 34, 56)' + ' #123456';
+    let hex = rgbToHex(r, g, b);
+    let hsl = rgbToHsl(r, g, b).hslString;
+    let cmyk = rgbToCmyk(r, g, b).cmykString;
+    textLi.textContent = `${hex} ${pixelRgb} ${hsl} ${cmyk}`;
     textLi.classList.add('textLi');
 
     colorLi.appendChild(closeBtn);
     colors.appendChild(colorLi);
     colors.appendChild(textLi);
+
+    function rgbToHex(r, g, b) {
+        let hexR = r.toString(16);
+        while (hexR.length < 2) { hexR = '0' + hexR; }
+        let hexG = g.toString(16);
+        while (hexG.length < 2) { hexG = '0' + hexG; }
+        let hexB = b.toString(16);
+        while (hexB.length < 2) { hexB = '0' + hexB; }
+        return `#${hexR}${hexG}${hexB}`;
+    };
+    function rgbToHsl(r, g, b) {
+            let h, l, s;
+            let rgb = [];
+            rgb[0] = r / 255;
+            rgb[1] = g / 255;
+            rgb[2] = b / 255;
+            let min = rgb[0];
+            let max = rgb[0];
+            let maxColor = 0;
+        
+            for (let i = 0; i < rgb.length - 1; i++) {
+                if (rgb[i + 1] <= min) { min = rgb[i + 1]; }
+                if (rgb[i + 1] >= max) { max = rgb[i + 1]; maxColor = i + 1; }
+            }
+            if (maxColor === 0) {
+                h = (rgb[1] - rgb[2]) / (max - min);
+            }
+            if (maxColor === 1) {
+                h = 2 + (rgb[2] - rgb[0]) / (max - min);
+            }
+            if (maxColor === 2) {
+                h = 4 + (rgb[0] - rgb[1]) / (max - min);
+            }
+            if (isNaN(h)) { h = 0; }
+            h = h * 60;
+            if (h < 0) { h = h + 360; }
+            l = (min + max) / 2;
+            if (min === max) {
+                s = 0;
+            } else {
+                if (l < 0.5) {
+                    s = (max - min) / (max + min);
+                } else {
+                    s = (max - min) / (2 - max - min);
+                }
+            }
+            h = Math.round(h);
+            s = Math.round(s * 100);
+            l = Math.round(l * 100);
+            return {
+                hue: h,
+                saturation: s,
+                lightness: l,
+                hslString: `hsl(${h}, ${s}%, ${l}%)`,
+            };
+        };
+    function rgbToCmyk(r, g, b) {
+        let c, m, y, k;
+        r = r / 255;
+        g = g / 255;
+        b = b / 255;
+        let max = Math.max(r, g, b);
+        k = 1 - max;
+        if (k === 1) {
+            c = 0;
+            m = 0;
+            y = 0;
+        } else {
+            c = (1 - r - k) / (1 - k);
+            m = (1 - g - k) / (1 - k);
+            y = (1 - b - k) / (1 - k);
+        }
+        c = Number((c * 100).toFixed(0));
+        m = Number((m * 100).toFixed(0));
+        y = Number((y * 100).toFixed(0));
+        k = Number((k * 100).toFixed(0));
+    
+        return {
+            cyan: c,
+            magenta: m,
+            yellow: y,
+            black: k,
+            cmykString: `cmyk(${c}%, ${m}%, ${y}%, ${k}%)`,
+        };
+    };
 }
 
 function exportColorCard() {
@@ -167,7 +253,7 @@ function exportColorCard() {
             exportCtx.fillText(item.textContent, 0, y + 15); // Adjust the position as needed
         }
 
-        y += itemHeight - 5;
+        y += itemHeight;
     }
 
     const dataURL = cnv.toDataURL('image/png', 1.0);
